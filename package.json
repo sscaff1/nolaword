@@ -1,0 +1,28 @@
+{
+  "name": "nolaword",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "date-fns": "^1.28.4",
+    "express": "^4.15.2",
+    "isomorphic-unfetch": "^1.0.0",
+    "mongodb": "^2.2.26",
+    "next": "^2.1.1",
+    "node-fetch": "^1.6.3",
+    "node-schedule": "^1.2.1",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-infinite": "^0.10.0"
+  },
+  "devDependencies": {
+    "babel-preset-stage-0": "^6.24.1"
+  }
+}
