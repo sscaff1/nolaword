@@ -53,24 +53,24 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var config = require('../config/config.json');
 
 
-var NEWS_DESK = 'news';
+var NEWS_DESK = 'sports';
 
-var News = function (_Component) {
-  (0, _inherits3.default)(News, _Component);
+var Sports = function (_Component) {
+  (0, _inherits3.default)(Sports, _Component);
 
-  function News() {
+  function Sports() {
     var _ref,
         _this2 = this;
 
     var _temp, _this, _ret;
 
-    (0, _classCallCheck3.default)(this, News);
+    (0, _classCallCheck3.default)(this, Sports);
 
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = News.__proto__ || (0, _getPrototypeOf2.default)(News)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = Sports.__proto__ || (0, _getPrototypeOf2.default)(Sports)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       articles: [],
       page: 1,
       fetching: false
@@ -110,7 +110,7 @@ var News = function (_Component) {
     })), _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 
-  (0, _createClass3.default)(News, [{
+  (0, _createClass3.default)(Sports, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
       window.addEventListener('scroll', this.scrollListener);
@@ -136,7 +136,7 @@ var News = function (_Component) {
           return _this3.layout = _ref3;
         } }, _react2.default.createElement(_layouts.Layout, { url: url }, _react2.default.createElement('h2', {
         'data-jsx': 84225715
-      }, 'News'), _react2.default.createElement('div', { className: 'container', 'data-jsx': 84225715
+      }, 'Sports'), _react2.default.createElement('div', { className: 'container', 'data-jsx': 84225715
       }, articles.map(function (article, i) {
         if (article.pixel) {
           return _react2.default.createElement(_components.Ad, {
@@ -201,7 +201,7 @@ var News = function (_Component) {
     }()
   }]);
 
-  return News;
+  return Sports;
 }(_react.Component);
 
-exports.default = News;
+exports.default = Sports;
