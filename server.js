@@ -1,6 +1,7 @@
 const express = require('express');
 const next = require('next');
 const path = require('path');
+const fetch = require('isomorphic-unfetch');
 const MongoClient = require('mongodb').MongoClient;
 const config = require('./config/config.json');
 
@@ -8,7 +9,7 @@ const router = express.Router();
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
-const q = 'New Orleans';
+const CITY = 'New Orleans';
 
 function getNewsDesk(newsDesk) {
   switch(newsDesk) {
@@ -47,6 +48,16 @@ app.prepare()
         res.json(docs);
       });
     });
+  });
+
+  router.route('/weather').get((req, res) => {
+    const BASE_REQUEST = 'http://api.openweathermap.org/data/2.5/weather?';
+    let query = req.query.zipCode ? 'zip=' + req.query.zipCode : 'q=' + CITY;
+    query += 'us&units=imperial&APPID=' + config.openWeather.key;
+    fetch(BASE_REQUEST + query)
+    .then(response => response.json())
+    .then(weather => res.json(weather))
+    .catch(error => console.log(error));
   });
 
   server.use('/api', router);

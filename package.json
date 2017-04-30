@@ -16,7 +16,6 @@
     "isomorphic-unfetch": "^1.0.0",
     "mongodb": "^2.2.26",
     "next": "^2.1.1",
-    "node-fetch": "^1.6.3",
     "node-schedule": "^1.2.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",

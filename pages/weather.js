@@ -5,109 +5,71 @@ import { Layout } from '../layouts';
 import { Article, Ad, makeRequest } from '../components';
 
 const NEWS_DESK = 'weather';
+const BASE_IMAGE = 'http://openweathermap.org/img/w/';
+
+function degToDirection(degree) {
+  const val = Math.round((degree / 22.55) + 0.5, 0);
+  const directions = ["N","NNE","NE","ENE","E","ESE", "SE", "SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"];
+  return directions[val % 16];
+}
 
 export default class Weather extends Component {
   state = {
-    articles: [],
-    page: 1,
-    fetching: false,
-  }
+    zipCode: '',
+  };
 
   static async getInitialProps ({ req }) {
     const origin = req ? `${req.protocol}://${req.get('Host')}` : window.location.origin
-    const articles = await makeRequest(origin, NEWS_DESK, 0)
+    const weather = await fetch(`${origin}/api/weather`).then(response => response.json());
     return {
-      articles,
-      origin,
+      weather,
     };
   }
 
-  componentDidMount() {
-    window.addEventListener('scroll', this.scrollListener);
-    window.addEventListener('resize', this.scrollListener);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.scrollListener);
-    window.removeEventListener('resize', this.scrollListener);
-  }
-
-  scrollListener = () => {
-    const height = window.innerHeight;
-    const pageYOffset = window.pageYOffset;
-    const docHeight = this.layout.offsetHeight;
-    if ((docHeight - height - pageYOffset < 50) && !this.state.fetching) {
-      this.setState({ fetching: true }, this.getArticles);
-    }
-  }
-
-  getArticles = async () => {
-    const { page, articles: currentArticles } = this.state;
-    const articles = await makeRequest(this.props.origin, NEWS_DESK, page);
-    this.setState({
-      articles: [
-        ...currentArticles,
-        ...articles,
-      ],
-      fetching: false,
-      page: this.state.page + 1,
-    });
-  }
-
   render() {
-    const { articles: initialArticles, url } = this.props;
-    const articles = [
-      ...initialArticles,
-      ...this.state.articles,
-    ];
+    const { url, weather } = this.props;
     return (
-      <div ref={ref => this.layout = ref}>
-        <Layout url={url}>
-          <h2>Weather</h2>
-          <div className="container">
-            {articles.map((article, i) => {
-              if (article.pixel) {
-                return (
-                  <Ad
-                    key={`article-${i}`}
-                    pixel={article.pixel}
-                    headline={article.headline}
-                    image={article.image}
-                    snippet={article.snippet}
-                    url={article.url}
-                    price={article.price}
-                  />
-                )
-              }
-              const image = article.multimedia && article.multimedia.filter(a => a.subtype === 'thumbnail')[0];
-              return (
-                <Article
-                  key={`article-${i}`}
-                  headline={article.headline.print_headline}
-                  image={image}
-                  snippet={article.snippet}
-                  url={article.web_url}
-                />
-              );
-            })}
+      <Layout url={url}>
+        <h2>Weather</h2>
+        <div className="container">
+          <div className="box">
+            <h3 className="title">{weather.name}</h3>
+            <img src={`${BASE_IMAGE}${weather.weather[0].icon}.png`} />
+            <h5 className="title">{weather.weather[0].description}</h5>
+            <br />
+            <h4 className="title">Temp: {Math.round(weather.main.temp, 0)}&#8457;</h4>
+            <h4 className="title">Humidity: {weather.main.humidity}%</h4>
+            <h4 className="title">Wind: {weather.wind.speed} mph {degToDirection(weather.wind.deg)}</h4>
           </div>
-          <style jsx>{`
-              h2 {
-                font-family: 'Open Sans';
-                width: 60%;
-                text-align: center;
-                border-bottom: 1px solid #000;
-              }
-              .container {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: space-between;
-                padding: 0 10px;
-              }
-            `}
-          </style>
-        </Layout>
-      </div>
+        </div>
+        <style jsx>{`
+          .container {
+            display: flex;
+            padding-left: 10px;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            padding-bottom: 300px;
+          }
+          .box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 40%;
+            border: 1px solid #000;
+            border-radius: 5px;
+            transition: all 0.2s;
+            padding: 10px 0;
+          }
+          .box:hover {
+            transform: scale(1.2);
+          }
+          .title {
+            margin: 0;
+          }
+        `}</style>
+      </Layout>
     );
   }
 }

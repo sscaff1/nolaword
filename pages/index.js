@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import fetch from 'isomorphic-unfetch';
 const config = require('../config/config.json');
 import { Layout } from '../layouts';
 import { Article, Ad, makeRequest } from '../components';
