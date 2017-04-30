@@ -1,0 +1,17 @@
+[
+  {
+    "uid": "cron",
+    "append": true,
+    "watch": true,
+    "script": "index.js",
+    "sourceDir": "~/nolaword"
+  },
+  {
+    "uid": "nolaword",
+    "append": true,
+    "watch": true,
+    "script": "server.js",
+    "sourceDir": "~/nolaword",
+    "args": ["-p", "80", "NODE_ENV=production"]
+  }
+]
