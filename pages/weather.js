@@ -64,6 +64,7 @@ export default class Weather extends Component {
             display: flex;
             justify-content: space-around;
             width: 100%;
+            flex: 1;
           }
           .box {
             height: 100%;
