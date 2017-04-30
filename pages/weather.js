@@ -62,9 +62,7 @@ export default class Weather extends Component {
         <style jsx>{`
           .container {
             display: flex;
-            justify-content: space-around;
             width: 100%;
-            flex: 1;
           }
           .box {
             height: 100%;
@@ -93,6 +91,11 @@ export default class Weather extends Component {
           }
           .forecast div:last-child {
             width: 50%;
+          }
+          @media (min-width: 500px) {
+            .container {
+              justify-content: space-around;
+            }
           }
           @media (max-width: 500px) {
             .container {
