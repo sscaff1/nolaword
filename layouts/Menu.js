@@ -31,8 +31,10 @@ export default function Menu({ url }) {
             text-decoration: none;
             transition: all 0.2s;
           }
-          a:hover {
-            transform: scale(1.2);
+          @media (min-width: 500px) {
+            a:hover {
+              transform: scale(1.2);
+            }
           }
           .wrap {
             display: flex;

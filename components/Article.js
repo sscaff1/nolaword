@@ -31,11 +31,11 @@ export default function Article({ image, url, snippet, headline }) {
             width: 30%;
             text-align: center;
           }
-           @media (max-width: 500px) {
-             .container {
-               width: 45%;
-             }
-           }
+          @media (max-width: 500px) {
+            .container {
+              width: 45%;
+            }
+          }
         `}
       </style>
     </a>
