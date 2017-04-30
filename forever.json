@@ -3,7 +3,7 @@
     "uid": "cron",
     "append": true,
     "watch": true,
-    "script": "index.js",
+    "script": "cronJob.js",
     "sourceDir": "~/nolaword"
   },
   {
