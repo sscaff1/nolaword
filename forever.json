@@ -4,14 +4,14 @@
     "append": true,
     "watch": true,
     "script": "cronJob.js",
-    "sourceDir": "~/nolaword"
+    "sourceDir": "/home/ubuntu/nolaword"
   },
   {
     "uid": "nolaword",
     "append": true,
     "watch": true,
     "script": "server.js",
-    "sourceDir": "~/nolaword",
+    "sourceDir": "/home/ubuntu/nolaword",
     "args": ["-p", "80", "NODE_ENV=production"]
   }
 ]
