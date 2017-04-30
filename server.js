@@ -51,12 +51,21 @@ app.prepare()
   });
 
   router.route('/weather').get((req, res) => {
-    const BASE_REQUEST = 'http://api.openweathermap.org/data/2.5/weather?';
+    const BASE_REQUEST = 'http://api.openweathermap.org/data/2.5/';
+    const WEATHER = 'weather?';
+    const FORECAST = 'forecast/daily?';
     let query = req.query.zipCode ? 'zip=' + req.query.zipCode : 'q=' + CITY;
     query += 'us&units=imperial&APPID=' + config.openWeather.key;
-    fetch(BASE_REQUEST + query)
-    .then(response => response.json())
-    .then(weather => res.json(weather))
+    const promises = [
+      fetch(BASE_REQUEST + WEATHER + query),
+      fetch(BASE_REQUEST + FORECAST + query),
+    ];
+    Promise.all(promises)
+    .then(responses => {
+      const jsonPromises = responses.map(r => r.json())
+      return Promise.all(jsonPromises);
+    })
+    .then(weather => res.json(Object.assign({}, weather[0], { forecast: weather[1] })))
     .catch(error => console.log(error));
   });
 
