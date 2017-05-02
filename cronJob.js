@@ -5,6 +5,7 @@ const differenceInDays = require('date-fns/difference_in_days');
 const endOfToday = require('date-fns/end_of_today');
 const config = require('./config/config.json');
 const QUERY = 'New Orleans';
+let db;
 
 function makeRequest(findStr, page) {
   console.log(findStr, page);
@@ -42,6 +43,7 @@ function fillDB(query, page) {
         if (differenceInDays(endOfToday(), new Date(article.pub_date)) > 60 || found || !article.web_url) {
           return false;
         }
+        article.pub_date = new Date(pub_date);
         return db.collection('articles').save(article);
       });
     });

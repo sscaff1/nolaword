@@ -44,7 +44,7 @@ app.prepare()
       if (total < (skip + LIMIT)) {
         return res.json({ message: 'out' });
       }
-      db.collection('articles').find(query).skip(skip).limit(LIMIT).toArray((err, docs) => {
+      db.collection('articles').find(query).sort({ pub_date: -1 }).skip(skip).limit(LIMIT).toArray((err, docs) => {
         res.json(docs);
       });
     });
