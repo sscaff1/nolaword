@@ -1,6 +1,8 @@
+import { distanceInWordsToNow } from 'date-fns';
 const baseImagePath = 'https://www.nytimes.com/';
 
-export default function Article({ image, url, snippet, headline }) {
+export default function Article({ image, url, snippet, headline, pub_date }) {
+  console.log(pub_date);
   return (
     <a href={url} target="_blank" className="container">
       <h3>{headline}</h3>
@@ -8,6 +10,7 @@ export default function Article({ image, url, snippet, headline }) {
         <img src={baseImagePath + image.url} className="image" style={{ height: image.height, width: image.width }} />
       )}
       <p>{snippet}</p>
+      <p className="date">{distanceInWordsToNow(pub_date, { addSuffix: true })}</p>
       <style jsx>{`
           h3, p {
             font-family: 'Open Sans';
@@ -25,9 +28,8 @@ export default function Article({ image, url, snippet, headline }) {
             transform: scale(1.05);
           }
           .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            display: block;
+            position: relative;
             width: 30%;
             text-align: center;
           }

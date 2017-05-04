@@ -11,6 +11,17 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 const CITY = 'New Orleans';
 
+function connectDb() {
+  return new Promise((resolve, reject) => {
+    MongoClient.connect('mongodb://localhost:27017/nolaword', (err, nolaword) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(nolaword)
+    });
+  })
+}
+
 function getNewsDesk(newsDesk) {
   switch(newsDesk) {
     case 'sports':
@@ -24,14 +35,6 @@ function getNewsDesk(newsDesk) {
 app.prepare()
 .then(() => {
   const server = express();
-  let db;
-
-  MongoClient.connect('mongodb://localhost:27017/nolaword', (err, nolaword) => {
-    if (err) {
-      throw err;
-    }
-    db = nolaword;
-  });
 
   router.route('/articles').get((req, res) => {
     if (!req.query.newsDesk) {
@@ -40,14 +43,18 @@ app.prepare()
     const query = getNewsDesk(req.query.newsDesk);
     const LIMIT = 10;
     const skip = (req.query && req.query.page * LIMIT) || 0;
-    db.collection('articles').find(query).count().then(total => {
-      if (total < (skip + LIMIT)) {
-        return res.json({ message: 'out' });
-      }
-      db.collection('articles').find(query).sort({ pub_date: -1 }).skip(skip).limit(LIMIT).toArray((err, docs) => {
-        res.json(docs);
+    connectDb()
+    .then(db => {
+      db.collection('articles').find(query).count().then(total => {
+        if (total < (skip + LIMIT)) {
+          return res.json({ message: 'out' });
+        }
+        db.collection('articles').find(query).sort({ pub_date: -1 }).skip(skip).limit(LIMIT).toArray((err, docs) => {
+          res.json(docs);
+        });
       });
-    });
+    })
+    .catch(error => console.log(error));
   });
 
   router.route('/weather').get((req, res) => {

@@ -86,6 +86,7 @@ export default class News extends Component {
                   image={image}
                   snippet={article.snippet}
                   url={article.web_url}
+                  pub_date={article.pub_date}
                 />
               );
             })}

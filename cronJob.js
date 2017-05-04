@@ -24,42 +24,47 @@ function makeRequest(findStr, page) {
   .catch(error => console.log(error));
 }
 
-MongoClient.connect('mongodb://localhost:27017/nolaword', (err, nolaword) => {
-  if (err) {
-    throw err;
-  }
-  db = nolaword;
-});
-
 function fillDB(query, page) {
-  makeRequest(query, page)
-  .then(articles => {
-    if (typeof articles !== 'object') {
-      return [false];
+  MongoClient.connect('mongodb://localhost:27017/nolaword', (err, nolaword) => {
+    if (err) {
+      throw err;
     }
-    const promises = articles.map(article => {
-      return db.collection('articles').findOne({ web_url: article.web_url, pub_date: article.pub_date })
-      .then(found => {
-        if (differenceInDays(endOfToday(), new Date(article.pub_date)) > 60 || found || !article.web_url) {
-          return false;
-        }
-        article.pub_date = new Date(pub_date);
-        return db.collection('articles').save(article);
+    console.log('connection open');
+    db = nolaword;
+    makeRequest(query, page)
+    .then(articles => {
+      if (typeof articles !== 'object') {
+        return [false];
+      }
+      const promises = articles.map(article => {
+        return db.collection('articles').findOne({ web_url: article.web_url, pub_date: new Date(article.pub_date) })
+        .then(found => {
+          if (differenceInDays(endOfToday(), new Date(article.pub_date)) > 60 || found || !article.web_url) {
+            return false;
+          }
+          article.pub_date = new Date(article.pub_date);
+          return db.collection('articles').save(article);
+        });
       });
-    });
-    return Promise.all(promises);
-  })
-  .then(results => {
-    if (results.some(result => !result)) {
-      console.log('Reached the end');
-      return false;
-    }
-    page += 1;
-    setTimeout(() => {
-      fillDB(QUERY, page);
-    }, 2000);
-  })
-  .catch(error => console.log(error));
+      return Promise.all(promises);
+    })
+    .then(results => {
+      if (results.some(result => !result)) {
+        console.log('Reached the end');
+        return false;
+      }
+      page += 1;
+      setTimeout(() => {
+        fillDB(QUERY, page);
+      }, 2000);
+    })
+    .then(() => {
+      db.close();
+      console.log('connection closed');
+    })
+    .catch(error => console.log(error));
+  });
+
 }
 
 fillDB(QUERY, 0);
