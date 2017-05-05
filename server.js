@@ -37,7 +37,7 @@ app.prepare()
   const server = express();
 
   server.get('/sitemap', (req, res) => {
-    res.sendFile(path.join(__dirname + '/static' + '/sitemap.xml'));
+    res.sendFile(path.join(__dirname, '/static', '/sitemap.xml'));
   });
 
   router.route('/articles').get((req, res) => {
