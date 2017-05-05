@@ -2,7 +2,6 @@ import { distanceInWordsToNow } from 'date-fns';
 const baseImagePath = 'https://www.nytimes.com/';
 
 export default function Article({ image, url, snippet, headline, pub_date }) {
-  console.log(pub_date);
   return (
     <a href={url} target="_blank" className="container">
       <h3>{headline}</h3>
