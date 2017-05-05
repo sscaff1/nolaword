@@ -36,6 +36,10 @@ app.prepare()
 .then(() => {
   const server = express();
 
+  server.get('/sitemap', (req, res) => {
+    res.sendFile(path.join(__dirname + '/static' + '/sitemap.xml'));
+  });
+
   router.route('/articles').get((req, res) => {
     if (!req.query.newsDesk) {
       return response.send('Looks like you did not send a proper request');
