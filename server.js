@@ -98,12 +98,13 @@ app.prepare()
       console.log('> Ready on http://localhost:3000');
     });
   } else {
-    const key = fs.readFileSync('/etc/letsencrypt/live/nolaword.com/privkey.pem')
-    const cert = fs.readFileSync('/etc/letsencrypt/live/nolaword.com/cert.pem')
+    console.log('using production configs');
+    const key = fs.readFileSync('./privkey.pem');
+    const cert = fs.readFileSync('./cert.pem');
     https.createServer({
       key,
       cert,
-    }, app).listen(3000, (err) => {
+    }, server).listen(3000, (err) => {
       if (err) throw err;
       console.log('> Ready on https://localhost:3000');
     });
