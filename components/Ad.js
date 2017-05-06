@@ -36,7 +36,7 @@ export default function Article({ image, url, snippet, headline, pixel, price })
           }
            @media (max-width: 500px) {
              .container {
-               width: 45%;
+               width: 100%;
              }
            }
            .pixel {

@@ -60,6 +60,9 @@ export default class Weather extends Component {
           </div>
         </div>
         <style jsx>{`
+          p, h3, h4 {
+            font-family: 'Open Sans';
+          }
           .container {
             display: flex;
             width: 100%;
