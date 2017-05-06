@@ -40,6 +40,10 @@ app.prepare()
     res.sendFile(path.join(__dirname, '/static', '/sitemap.xml'));
   });
 
+  server.get(config.certbot.endpoint, (req, res) => {
+    res.send(config.certbot.key);
+  });
+
   router.route('/articles').get((req, res) => {
     if (!req.query.newsDesk) {
       return response.send('Looks like you did not send a proper request');

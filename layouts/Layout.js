@@ -35,6 +35,9 @@ export default function Layout({ url, children }) {
       <Menu url={url} />
       {children}
       <style jsx>{`
+          body {
+            margin: 0;
+          }
           .header {
             font-family: 'Rubik Mono One';
             cursor: pointer;
