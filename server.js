@@ -1,6 +1,8 @@
 const express = require('express');
 const next = require('next');
 const path = require('path');
+const fs = require('fs');
+const https = require('https');
 const fetch = require('isomorphic-unfetch');
 const MongoClient = require('mongodb').MongoClient;
 const config = require('./config/config.json');
@@ -90,8 +92,20 @@ app.prepare()
     return handle(req, res);
   })
 
-  server.listen(3000, (err) => {
-    if (err) throw err;
-    console.log('> Ready on http://localhost:3000');
-  });
+  if (!dev) {
+    server.listen(3000, (err) => {
+      if (err) throw err;
+      console.log('> Ready on http://localhost:3000');
+    });
+  } else {
+    const key = fs.readFileSync('/etc/letsencrypt/live/nolaword.com/privkey.pem')
+    const cert = fs.readFileSync('/etc/letsencrypt/live/nolaword.com/cert.pem')
+    https.createServer({
+      key,
+      cert,
+    }, app).listen(3000, (err) => {
+      if (err) throw err;
+      console.log('> Ready on https://localhost:3000');
+    });
+  }
 })
