@@ -1,9 +1,9 @@
-const MongoClient = require('mongodb').MongoClient;
 const fetch = require('isomorphic-unfetch');
 const schedule = require('node-schedule');
 const differenceInDays = require('date-fns/difference_in_days');
 const endOfToday = require('date-fns/end_of_today');
 const config = require('./config/config.json');
+const connectDb = require('./utilities/connectDb');
 const QUERY = 'New Orleans';
 let db;
 
@@ -20,17 +20,12 @@ function makeRequest(findStr, page) {
       return response;
     }
     return response.response.docs;
-  })
-  .catch(error => console.log(error));
+  });
 }
 
 function fillDB(query, page) {
-  MongoClient.connect('mongodb://localhost:27017/nolaword', (err, nolaword) => {
-    if (err) {
-      throw err;
-    }
-    console.log('connection open');
-    db = nolaword;
+  connectDb()
+  .then(db => {
     makeRequest(query, page)
     .then(articles => {
       if (typeof articles !== 'object') {
@@ -59,12 +54,11 @@ function fillDB(query, page) {
       }, 2000);
     })
     .then(() => {
-      db.close();
       console.log('connection closed');
+      db.close();
     })
     .catch(error => console.log(error));
   });
-
 }
 
 fillDB(QUERY, 0);

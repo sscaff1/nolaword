@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import fetch from 'isomorphic-unfetch';
 import { format } from 'date-fns';
-const config = require('../config/config.json');
 import { Layout } from '../layouts';
-import { Article, Ad, makeRequest } from '../components';
+import { Article, Ad } from '../components';
+const config = require('../config/config.json');
 
 const NEWS_DESK = 'weather';
 const BASE_IMAGE = 'https://openweathermap.org/img/w/';

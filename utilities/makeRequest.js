@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-unfetch';
-import config from '../config/config.json';
+const config = require('../config/config.json');
 
 export default function makeRequest(host, newsDesk, page) {
   return fetch(`${host}/api/articles?newsDesk=${newsDesk}&page=${page}`)

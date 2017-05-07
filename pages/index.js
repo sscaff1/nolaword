@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-const config = require('../config/config.json');
 import { Layout } from '../layouts';
-import { Article, Ad, makeRequest } from '../components';
+import { Article, Ad } from '../components';
+import makeRequest from '../utilities/makeRequest';
+const config = require('../config/config.json');
 
 const NEWS_DESK = 'news';
 

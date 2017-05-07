@@ -4,25 +4,14 @@ const path = require('path');
 const fs = require('fs');
 const https = require('https');
 const fetch = require('isomorphic-unfetch');
-const MongoClient = require('mongodb').MongoClient;
 const config = require('./config/config.json');
+const connectDb = require('./utilities/connectDb');
 
 const router = express.Router();
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
 const handle = app.getRequestHandler();
 const CITY = 'New Orleans';
-
-function connectDb() {
-  return new Promise((resolve, reject) => {
-    MongoClient.connect('mongodb://localhost:27017/nolaword', (err, nolaword) => {
-      if (err) {
-        reject(err);
-      }
-      resolve(nolaword)
-    });
-  })
-}
 
 function getNewsDesk(newsDesk) {
   switch(newsDesk) {
@@ -90,7 +79,7 @@ app.prepare()
 
   server.get('*', (req, res) => {
     return handle(req, res);
-  })
+  });
 
   if (dev) {
     server.listen(3000, (err) => {
@@ -109,4 +98,4 @@ app.prepare()
       console.log('> Ready on https://localhost:3000');
     });
   }
-})
+});
