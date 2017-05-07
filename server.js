@@ -92,7 +92,7 @@ app.prepare()
     return handle(req, res);
   })
 
-  if (!dev) {
+  if (dev) {
     server.listen(3000, (err) => {
       if (err) throw err;
       console.log('> Ready on http://localhost:3000');

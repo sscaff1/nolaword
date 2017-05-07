@@ -6,7 +6,7 @@ import { Layout } from '../layouts';
 import { Article, Ad, makeRequest } from '../components';
 
 const NEWS_DESK = 'weather';
-const BASE_IMAGE = 'http://openweathermap.org/img/w/';
+const BASE_IMAGE = 'https://openweathermap.org/img/w/';
 
 function degToDirection(degree) {
   const val = Math.round((degree / 22.55) + 0.5, 0);
