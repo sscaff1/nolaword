@@ -14,20 +14,17 @@ const handle = app.getRequestHandler();
 const CITY = 'New Orleans';
 
 function getNewsDesk(newsDesk) {
-  switch(newsDesk) {
-    case 'sports':
-      return { news_desk: 'Sports' };
-    case 'news':
-    default:
-      return { news_desk: { $ne: 'Sports' } };
+  if (newsDesk === 'sports') {
+    return { news_desk: 'Sports' };
   }
+  return { news_desk: { $ne: 'Sports' } };
 }
 
 app.prepare()
 .then(() => {
   const server = express();
 
-  server.get('/sitemap', (req, res) => {
+  server.get(['/sitemap', '/sitemap.xml'], (req, res) => {
     res.sendFile(path.join(__dirname, '/static', '/sitemap.xml'));
   });
 
