@@ -15,9 +15,15 @@ const CITY = 'New Orleans';
 
 function getNewsDesk(newsDesk) {
   if (newsDesk === 'sports') {
-    return { news_desk: 'Sports' };
+    return { $or: [
+      { news_desk: 'Sports' },
+      { section_name: 'Sports' },
+    ] };
   }
-  return { news_desk: { $ne: 'Sports' } };
+  return { $and: [
+    { news_desk: { $ne: 'Sports' } },
+    { section_name: { $ne: 'Sports' } },
+  ] };
 }
 
 app.prepare()

@@ -1,7 +1,7 @@
 import { distanceInWordsToNow } from 'date-fns';
 const baseImagePath = 'https://www.nytimes.com/';
 
-export default function Article({ image, url, snippet, headline, pub_date }) {
+export default function Article({ image, url, snippet, headline, pub_date, source }) {
   return (
     <a href={url} target="_blank" className="container">
       <h3>{headline}</h3>
@@ -11,6 +11,7 @@ export default function Article({ image, url, snippet, headline, pub_date }) {
       <p className="snippet">{snippet}</p>
       <div className="dateContainer">
         <p className="date">{distanceInWordsToNow(pub_date, { addSuffix: true })}</p>
+        <p className="source">{`New York Times${source ? ` - ${source.toLowerCase()}` : ''}`}</p>
       </div>
       <style jsx>{`
           h3, p {
@@ -36,13 +37,19 @@ export default function Article({ image, url, snippet, headline, pub_date }) {
           }
           .dateContainer {
             position: absolute;
-            bottom: -10px;
+            bottom: 0px;
             text-align: center;
             width: 100%;
           }
+          .source,
           .date {
             font-variant: small-caps;
             color: gray;
+            margin: 0;
+            font-size: 11px;
+          }
+          .source {
+            font-size: 10px;
           }
           .snippet {
             padding-bottom: 15px;

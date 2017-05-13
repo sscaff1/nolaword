@@ -81,11 +81,12 @@ export default function makeNewsPage(newsDesk, title) {
                 return (
                   <Article
                     key={`article-${i}`}
-                    headline={article.headline.print_headline}
+                    headline={article.headline.print_headline || article.headline.main}
                     image={image}
                     snippet={article.snippet}
                     url={article.web_url}
                     pub_date={article.pub_date}
+                    source={article.byline.organization}
                   />
                 );
               })}
