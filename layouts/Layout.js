@@ -30,6 +30,7 @@ export default function Layout({ url, children }) {
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Rubik+Mono+One" rel="stylesheet" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta name="description" content={getMetaDescription(url.pathname)} />
+        <meta name="keywords" content="New Orleans, New Orleans News, New Orleans News Fast, New Orleans Sports, New Orleans Weather" />
         <link rel="canonical" href={`${BASE_URL}${url.pathname}`} />
         <script dangerouslySetInnerHTML={{
           __html: `
