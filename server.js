@@ -34,6 +34,10 @@ app.prepare()
     res.sendFile(path.join(__dirname, '/static', '/sitemap.xml'));
   });
 
+  server.get(['/robots', '/robots.txt'], (req, res) => {
+    res.sendFile(path.join(__dirname, '/static', '/robots.txt'));
+  });
+
   server.get(config.certbot.endpoint, (req, res) => {
     res.send(config.certbot.key);
   });
