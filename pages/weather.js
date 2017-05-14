@@ -51,7 +51,6 @@ export default class Weather extends Component {
               snippet={product.snippet}
               url={product.url}
               price={product.price}
-              full
             />
           </div>
           <div className="box">
@@ -79,20 +78,19 @@ export default class Weather extends Component {
             display: flex;
             width: 100%;
           }
-          .container > div {
+          .container div {
+            margin: 0 auto 10px;
+            width: 100%;
             height: 100%;
             text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+          }
+          .container > div {
             width: 40%;
           }
           .box {
             border: 1px solid #000;
             border-radius: 5px;
             padding: 10px 0;
-            width: 100%;
-            margin-bottom: 10px;
           }
           .title {
             margin: 0;
@@ -101,18 +99,8 @@ export default class Weather extends Component {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 100%;
             padding: 10px 0;
             border-bottom: 1px solid black;
-          }
-          .forecast div:first-child {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 50%;
-          }
-          .forecast div:last-child {
-            width: 50%;
           }
           @media (min-width: 500px) {
             .container {
@@ -120,13 +108,11 @@ export default class Weather extends Component {
             }
           }
           @media (max-width: 500px) {
-            .container {
-              flex-direction: column;
-              align-items: center;
+            .container{
+              display: block;
             }
-            .box {
-              width: 90%;
-              margin-bottom: 5px;
+            .container div {
+              width: 100%;
             }
           }
         `}</style>

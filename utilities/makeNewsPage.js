@@ -66,16 +66,17 @@ export default function makeNewsPage(newsDesk, title) {
               {articles.map((article, i) => {
                 if (article.pixel) {
                   return (
-                    <Ad
-                      key={`article-${i}`}
-                      pixel={article.pixel}
-                      headline={article.headline}
-                      image={article.image}
-                      snippet={article.snippet}
-                      url={article.url}
-                      price={article.price}
-                    />
-                  )
+                    <div className="adContainer" key={`article-${i}`}>
+                      <Ad
+                        pixel={article.pixel}
+                        headline={article.headline}
+                        image={article.image}
+                        snippet={article.snippet}
+                        url={article.url}
+                        price={article.price}
+                      />
+                    </div>
+                  );
                 }
                 const image = article.multimedia && article.multimedia.filter(a => a.subtype === 'thumbnail')[0];
                 return (
@@ -103,6 +104,12 @@ export default function makeNewsPage(newsDesk, title) {
                   flex-wrap: wrap;
                   justify-content: space-between;
                   padding: 0 10px;
+                }
+                .adContainer { margin-bottom: 10px; }
+                @media (min-width: 500px) {
+                  .adContainer {
+                    width: 30%
+                  }
                 }
               `}
             </style>

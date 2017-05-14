@@ -58,6 +58,11 @@ export default function Menu({ url }) {
             margin: 0;
             text-align: center;
           }
+          @media (max-width: 500px) {
+            .header {
+              font-size: 1.2em;
+            }
+          }
         `}
       </style>
     </div>
