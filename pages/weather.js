@@ -29,18 +29,30 @@ export default class Weather extends Component {
 
   render() {
     const { url, weather } = this.props;
+    const product = config.products[Math.floor(Math.random() * config.products.length)];
     return (
       <Layout url={url}>
         <h2>Weather</h2>
         <div className="container">
-          <div className="box">
-            <h3 className="title">{weather.name}</h3>
-            <img src={`${BASE_IMAGE}${weather.weather[0].icon}.png`} />
-            <h5 className="title">{weather.weather[0].description}</h5>
-            <br />
-            <h4 className="title">Temp: {Math.round(weather.main.temp, 0)}&#8457;</h4>
-            <h4 className="title">Humidity: {weather.main.humidity}%</h4>
-            <h4 className="title">Wind: {weather.wind.speed} mph {degToDirection(weather.wind.deg)}</h4>
+          <div>
+            <div className="box">
+              <h3 className="title">{weather.name}</h3>
+              <img src={`${BASE_IMAGE}${weather.weather[0].icon}.png`} />
+              <h5 className="title">{weather.weather[0].description}</h5>
+              <br />
+              <h4 className="title">Temp: {Math.round(weather.main.temp, 0)}&#8457;</h4>
+              <h4 className="title">Humidity: {weather.main.humidity}%</h4>
+              <h4 className="title">Wind: {weather.wind.speed} mph {degToDirection(weather.wind.deg)}</h4>
+            </div>
+            <Ad
+              pixel={product.pixel}
+              headline={product.headline}
+              image={product.image}
+              snippet={product.snippet}
+              url={product.url}
+              price={product.price}
+              full
+            />
           </div>
           <div className="box">
             <h3 className="title">Forecast</h3>
@@ -67,13 +79,20 @@ export default class Weather extends Component {
             display: flex;
             width: 100%;
           }
-          .box {
+          .container > div {
             height: 100%;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             width: 40%;
+          }
+          .box {
             border: 1px solid #000;
             border-radius: 5px;
             padding: 10px 0;
+            width: 100%;
+            margin-bottom: 10px;
           }
           .title {
             margin: 0;

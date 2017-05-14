@@ -1,6 +1,6 @@
-export default function Article({ image, url, snippet, headline, pixel, price }) {
+export default function Article({ image, url, snippet, headline, pixel, price, full }) {
   return (
-    <a href={url} target="_blank" className="container">
+    <a href={url} target="_blank" className="container" style={{ width: full ? '100%' : '30%' }}>
       <h3>{headline}</h3>
       {image && (
         <img src={image} />
@@ -31,7 +31,6 @@ export default function Article({ image, url, snippet, headline, pixel, price })
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 30%;
             text-align: center;
           }
            @media (max-width: 500px) {
